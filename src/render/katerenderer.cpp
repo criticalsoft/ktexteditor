@@ -218,7 +218,15 @@ void KateRenderer::paintTextLineBackground(QPainter &paint, KateLineLayoutPtr la
     }
 
     // Draw line background
-    paint.fillRect(0, 0, xEnd - xStart, lineHeight() * layout->viewLineCount(), backgroundColor);
+
+
+
+
+    // MOD
+    // paint.fillRect(0, 0, xEnd - xStart, lineHeight() * layout->viewLineCount(), backgroundColor);
+
+
+
 
     // paint the current line background if we're on the current line
     const bool currentLineHasSelection = m_view && m_view->selection() && m_view->selectionRange().overlapsLine(layout->line());
@@ -232,7 +240,11 @@ void KateRenderer::paintTextLineBackground(QPainter &paint, KateLineLayoutPtr la
                                     int((currentLineColor.blue() * 0.9) + (markBlue * 0.1)));
         }
 
-        paint.fillRect(0, lineHeight() * currentViewLine, xEnd - xStart, lineHeight(), currentLineColor);
+
+
+        // MOD
+        // paint.fillRect(0, lineHeight() * currentViewLine, xEnd - xStart, lineHeight(), currentLineColor);
+        paint.fillRect(0, lineHeight() * currentViewLine, xEnd - xStart, lineHeight(), QBrush(QColor(currentLineColor.red(), currentLineColor.green(), currentLineColor.blue(), 128)));
     }
 }
 
@@ -572,8 +584,7 @@ void KateRenderer::paintTextLine(QPainter &paint, KateLineLayoutPtr range, int x
                 if (selectionEndColumn > lastLine.startCol()) {
                     int selectionStartX = (selectionStartColumn > lastLine.startCol()) ? cursorToX(lastLine, selectionStartColumn, true) : 0;
                     int selectionEndX = cursorToX(lastLine, selectionEndColumn, true);
-                    paint.fillRect(QRect(selectionStartX - xStart, (int)lastLine.lineLayout().y(), selectionEndX - selectionStartX, lineHeight()),
-                                   selectionBrush);
+                    paint.fillRect(QRect(selectionStartX - xStart, (int)lastLine.lineLayout().y(), selectionEndX - selectionStartX, lineHeight()), selectionBrush);
                 }
             } else {
                 const int selectStickWidth = 2;
@@ -659,6 +670,23 @@ void KateRenderer::paintTextLine(QPainter &paint, KateLineLayoutPtr range, int x
                     draw = true;
                     drawBrush = backgroundBrush;
                 }
+
+
+
+
+                // MOD
+                QColor tc = QColor(drawBrush.color());
+                tc = QColor(tc.red(), tc.green(), tc.blue(), 128);
+                drawBrush = QBrush(tc);
+
+                // QColor tc = QColor(255, 0, 0, 128);
+                // tc.setAlpha(128);
+                // QBrush selectionBrush = QBrush(tc);
+                // QBrush selectionBrush = QBrush(QColor(tc.red(), tc.green(), tc.blue(), 128));
+
+
+
+
 
                 if (draw) {
                     int fillStartX = line.endX() - line.startX() + line.xOffset() - xStart;

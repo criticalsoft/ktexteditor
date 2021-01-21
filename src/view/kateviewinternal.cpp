@@ -148,7 +148,17 @@ KateViewInternal::KateViewInternal(KTextEditor::ViewPrivate *view)
     m_currentInputMode = m_inputModes[KTextEditor::View::NormalInputMode]; // TODO: twisted, but needed
 
     setMinimumSize(0, 0);
-    setAttribute(Qt::WA_OpaquePaintEvent);
+
+
+
+
+    // MOD
+    // FIX: Widget DoesNot Follow Application Background Color (Transparent 0)
+    // setAttribute(Qt::WA_OpaquePaintEvent);
+
+
+
+
     setAttribute(Qt::WA_InputMethodEnabled);
 
     // invalidate m_selectionCached.start(), or keyb selection is screwed initially
@@ -3061,7 +3071,11 @@ void KateViewInternal::paintEvent(QPaintEvent *e)
             if (!(z >= lineRangesSize)) {
                 cache()->viewLine(z).setDirty(false);
             }
-            paint.fillRect(0, 0, unionRect.width(), h, renderer()->config()->backgroundColor());
+
+
+
+            // MOD
+            // paint.fillRect(0, 0, unionRect.width(), h, renderer()->config()->backgroundColor());
         }
 
         // paint text lines
@@ -3083,7 +3097,14 @@ void KateViewInternal::paintEvent(QPaintEvent *e)
 
                 // compute rect for line, fill the stuff
                 const QRectF lineRect(0, 0, unionRect.width(), h * thisLine.kateLineLayout()->viewLineCount());
-                paint.fillRect(lineRect, renderer()->config()->backgroundColor());
+
+
+
+                // MOD
+                // paint.fillRect(lineRect, renderer()->config()->backgroundColor());
+
+
+
 
                 // THIS IS ULTRA EVIL AND ADDS STRANGE RENDERING ARTIFACTS WITH SCALING!!!!
                 // SEE BUG https://bugreports.qt.io/browse/QTBUG-66036

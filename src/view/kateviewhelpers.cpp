@@ -774,7 +774,15 @@ void KateScrollBar::miniMapPaintEvent(QPaintEvent *e)
 
     // draw the grove background in case the document is small
     painter.setPen(Qt::NoPen);
-    painter.setBrush(backgroundColor);
+
+
+
+    // MOD
+    // painter.setBrush(backgroundColor);
+
+
+
+    
     painter.drawRect(grooveRect);
 
     // adjust the rectangles
@@ -828,7 +836,15 @@ void KateScrollBar::miniMapPaintEvent(QPaintEvent *e)
                        grooveRect.height() - (visibleRect.y() - grooveRect.y()) - visibleRect.height());
 
     QColor faded(backgroundColor);
-    faded.setAlpha(110);
+    
+    
+    
+    // MOD
+    // faded.setAlpha(110);
+    faded.setAlpha(0);
+
+
+
     painter.fillRect(top, faded);
     painter.fillRect(bottom, faded);
 
@@ -1432,7 +1448,16 @@ KateIconBorder::KateIconBorder(KateViewInternal *internalView, QWidget *parent)
     // have a background, there's no need for Qt to erase the widget's area
     // before repainting. Enabling this prevents flickering when the widget is
     // repainted.
-    setAttribute(Qt::WA_OpaquePaintEvent);
+
+
+
+
+    // MOD
+    // FIX: Widget DoesNot Follow Application Background Color (Transparent 0)
+    // setAttribute(Qt::WA_OpaquePaintEvent);
+
+
+
 
     setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Minimum);
     setMouseTracking(true);
@@ -1958,7 +1983,16 @@ void KateIconBorder::paintBorder(int /*x*/, int y, int /*width*/, int height)
         uint lnX = 0;
 
         // Paint background over full width...
-        p.fillRect(lnX, y, w, h, iconBarColor);
+
+
+
+
+        // MOD
+        // p.fillRect(lnX, y, w, h, iconBarColor);
+
+
+
+
 
         // get line for this coordinates if possible
         const KateTextLayout lineLayout = m_viewInternal->cache()->viewLine(z);
